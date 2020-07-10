@@ -16,21 +16,20 @@ push연산은 +로, pop 연산은 -로 표현하도록 한다. 불가능한 경�
 """
 import sys
 N = int(sys.stdin.readline())
-stack = [0]
+stack = []
 result = []
 i = 1
-possible = True
 for _ in range(N):
   n = int(sys.stdin.readline())
-  while stack[len(stack)-1] < n :
+  while i <= n:
     stack.append(i)
     i += 1
     result.append("+")
-  if stack[len(stack)-1] == n :
+  if stack[-1] == n :
     stack.pop()
     result.append("-")
-if len(result) == 2 * N :
-  for op in result :
+if len(stack) == N*2:
+  for op in result:
     print(op)
 else :
-  print("No")
+  print("NO")

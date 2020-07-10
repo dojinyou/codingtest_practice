@@ -21,12 +21,40 @@ i번째 줄에는 i번째 친구가 자리잡은 컴퓨터의 번호를 출력�
 처리하는 정수의 범위가 32비트 정수를 넘어가므로 64비트 정수형 변수를 사용하도록 한다.
 """
 from sys import stdin
-import heapq
-
+from queue import PriorityQueue
 M, N, Q  = map(int, stdin.readline().split(' ')) # 전체 명수, 앉아 있는 애들 수, 친구 수
-N_list = list(map(int, stdin.readline().split(' '))) # 앉아 있는 친구들 위치
-Q_list = list(map(int, stdin.readline().split(' '))) # 친구들 순서
-
+N_list = list(map(int, stdin.readline().split())) # 앉아 있는 친구들 위치
+Q_list = list(map(int, stdin.readline().split())) # 친구들 순서
+pq = PriorityQueue()
+cnt = 0
+while Q_list[cnt] <= N :    
+    print(N_list[Q_list[cnt]])
+    cnt += 1
+Q_list = Q_list[cnt:]
+prev = 1
+for i in range(N):
+    pq.put((-1*(N_list[i]-prev),(N_list[i]+prev)//2))
+    prev = N_list[i]
+    cnt += 1
+pq.put((-1*(M-prev),(M+1+prev)//2))
+print("cnt=",cnt)
+for q in Q_list:
+    print(q, "와일전")
+    while cnt < M :
+        cnt += 1
+        info = pq.get()
+        print(info)
+        space = -1*info[0]
+        nxt = info[1]
+        pq.put((-1*((space-1)//2), nxt-((space-1)//2+1)//2))
+        print((-1*((space-1)//2), nxt-((space-1)//2+1)//2))
+        pq.put((-1*((space)//2), nxt+(space//2)//2))
+        print((-1*((space)//2), nxt+(space//2)//2))
+        if cnt == q :
+            print(nxt)
+            break
+            
+            
 # 시간초과
 # # 미리 앉은 친구들 출력
 # for f_num in Q_list[:]:

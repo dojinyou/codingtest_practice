@@ -12,6 +12,32 @@ Q. 친구 네트워크(4195): https://www.acmicpc.net/problem/4195
 출력: 친구 관계가 생길 때마다, 두 사람의 친구 네트워크에 몇 명이 있는지 구하는 프로그램을 작성하시오.
 """
 from sys import stdin
+for _ in range(int(stdin.readline().strip())):
+    f_set = {}
+    set_list = []
+    for i in range(int(stdin.readline().strip())):
+        f1, f2 = map(str, stdin.readline().split())
+        if f1 in f_set and f2 in f_set:
+            set_list[f_set[f1]] += set_list[f_set[f2]]
+            set_list.pop(f_set[f2])
+            for name in f_set:
+                if f_set[name] == f_set[f2]:
+                    f_set[name] = f_set[f1]
+                if f_set[name] > f_set[f2]:
+                    f_set[name] -= 1
+        elif f1 in f_set:
+            f_set[f2] = f_set[f1]
+            set_list[f_set[f1]] += 1
+        elif f2 in f_set:
+            f_set[f1] = f_set[f2]
+            set_list[f_set[f2]] += 1
+        else :
+            f_set[f1], f_set[f2] = len(set_list), len(set_list)
+            set_list.append(2)
+        print(set_list[f_set[f1]])
+
+
+
 
 # # 시간초과
 # for _ in range(int(stdin.readline().strip())):

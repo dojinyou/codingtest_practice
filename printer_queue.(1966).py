@@ -17,25 +17,43 @@ Q. 프린터 큐(1966): https://www.acmicpc.net/problem/1966
 출력: 각 test case에 대해 문서가 몇 번째로 인쇄되는지 출력한다
 """
 from sys import stdin
+import queue
+result = []
 num_of_testcase = int(stdin.readline().rstrip())
 for _ in range(num_of_testcase):
   num_of_paper, target_idx = map(int, stdin.readline().split(' '))
   importance = list(map(int, stdin.readline().split(' ')))
-  cnt,start = 0, 0
-  while True :
-    max_info = [0, 0] # idx, value
-    for i in range(len(importance)):
-      cur_idx = i+start if i + start < len(importance) else i + start - len(importance)
-      print("cur_idx:",cur_idx)
-      if max_info[1] < importance[cur_idx]:
-        max_info[0] = cur_idx
-        max_info[1] = importance[cur_idx]
-    if max_info[0] == target_idx:
-      print(cnt+1)
-      break
-    del importance[max_info[0]]
+  q = queue.Queue()
+  max_value = 0
+  for i in range(num_of_paper):
+    isTarget = True if i == target_idx else False 
+    q.put([importance[i],isTarget])
+    max_value = max(importance[i], max_value)
+  
+  cnt = 0
+  while True:
+    item = q.get()
+    # print(item, q.qsize(),cnt)
     cnt += 1
-    start = max_info[0]
+    if item[0] != max_value:
+      q.put(item)
+    else :
+      if item[1] :
+        # print(num_of_paper - q.qsize())
+        result.append(num_of_paper - q.qsize())
+        break
+      cnt = 0
+      # print("reset")
+    if cnt == q.qsize():
+      # print("reset")
+      cnt = 0
+      max_value -= 1
+
+for i in range(num_of_testcase):
+  cor = False
+  if result[i] == int(stdin.readline()) :
+    cor = True
+  print(cor, i)
 
 
 
