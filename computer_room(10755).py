@@ -28,28 +28,28 @@ Q_list = list(map(int, stdin.readline().split())) # 친구들 순서
 pq = PriorityQueue()
 cnt = 0
 while Q_list[cnt] <= N :    
-    print(N_list[Q_list[cnt]])
+    print(N_list[Q_list[cnt]-1])
     cnt += 1
 Q_list = Q_list[cnt:]
-prev = 1
+prev = 0
 for i in range(N):
-    pq.put((-1*(N_list[i]-prev),(N_list[i]+prev)//2))
+    pq.put((-1*(N_list[i]-prev-1),(N_list[i]+prev)//2))
     prev = N_list[i]
-    cnt += 1
 pq.put((-1*(M-prev),(M+1+prev)//2))
 print("cnt=",cnt)
 for q in Q_list:
     print(q, "와일전")
     while cnt < M :
-        cnt += 1
         info = pq.get()
+        cnt += 1
         print(info)
         space = -1*info[0]
         nxt = info[1]
-        pq.put((-1*((space-1)//2), nxt-((space-1)//2+1)//2))
-        print((-1*((space-1)//2), nxt-((space-1)//2+1)//2))
-        pq.put((-1*((space)//2), nxt+(space//2)//2))
-        print((-1*((space)//2), nxt+(space//2)//2))
+        # if space > 1 :
+        #     pq.put((-1*(space-1)//2, nxt-max((space-1)//2//2, 1)))
+        #     print((-1*((space-1)//2), nxt-max((space-1)//2//2, 1)))
+        #     pq.put((-1*(space//2), nxt+max(((space//2)-1)//2,1)))
+        #     print((-1*(space//2), nxt+max(((space//2)-1)//2,1)))
         if cnt == q :
             print(nxt)
             break

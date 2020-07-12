@@ -39,8 +39,8 @@ for _ in range(num_of_testcase):
       q.put(item)
     else :
       if item[1] :
-        # print(num_of_paper - q.qsize())
-        result.append(num_of_paper - q.qsize())
+        print(num_of_paper - q.qsize())
+        # result.append(num_of_paper - q.qsize())
         break
       cnt = 0
       # print("reset")
@@ -49,11 +49,11 @@ for _ in range(num_of_testcase):
       cnt = 0
       max_value -= 1
 
-for i in range(num_of_testcase):
-  cor = False
-  if result[i] == int(stdin.readline()) :
-    cor = True
-  print(cor, i)
+# for i in range(num_of_testcase):
+#   cor = False
+#   if result[i] == int(stdin.readline()) :
+#     cor = True
+#   print(cor, i)
 
 
 
